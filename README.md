@@ -104,4 +104,87 @@ Basic
   2.
 
   You're building an activity feed for a social media site. The feed must display a chronological list of activities for the current user's friends. These activities could potentially be any action performed on the site including uploading a photo, changing their profile, friending another user, commenting, liking etc... Further, you only want to display activities for users that the current user interacts with frequently.
+
+
+  User{
+    Id,
+    Profile:{
+      Firstname: String,
+      Lastname: String,
+      Bio: String,
+      ProfilePic: File
+    }
+    Photos:[
+      {
+        photoId:Integer,
+        image:File,
+        likes:[UserIds],
+        UploadedAt:Time,
+        Comments: [
+          {
+            UserId: UserId,
+            UserName: String,
+            ContentL String,
+            TimeStamp:time
+          }
+        ]
+      }
+    ],
+    Password: String,
+    Email: String,
+    Posts: [
+      {
+        Id:Integer,
+        Body:String,
+        Likes:[UserIds],
+        TimeStamp: Time,
+        Comments: [
+          {
+            UserId: UserId,
+            UserName: String,
+            ContentL String,
+            TimeStamp:time
+          }
+        ]
+      }
+    ],
+    Activities: [
+      {
+        Id:Integer, Type:String, Target: {TargetId: Integer, TargetType: String},
+        TargetUserID: Integer
+      }
+    ],
+    Friends: [ids]
+  }
+
+
+
+  Aggregate Function to find active friendships:
+    1st direction
+      User's actions towards friends
+        Spelled out in activities
+
+    2nd direction
+      Friends actions towards user
+        Look in friends, get those collections of users
+          Check their activities for UserId
+
+    Return array of friends most interacted with
+    Use this function on login to build news feed
+
+  News Feed Function
+    Use the return array of active friends
+    Take list of activities from active friends
+    Order by most recent activity
+    Display activity list
+
+
+
+
+
+
+
+
+
+
 ```
